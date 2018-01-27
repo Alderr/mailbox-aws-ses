@@ -8,6 +8,9 @@
         "sourceType": "module"
     },
     "rules": {
+      "no-undef": [
+          "warn"
+      ],
         "indent": [
             "error",
             4

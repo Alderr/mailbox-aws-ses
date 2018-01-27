@@ -36,7 +36,7 @@ function runServer(port = PORT) {
 
 function closeServer(){
     return new Promise(function(resolve, reject) {
-        server.close(() => {
+        server.close((err) => {
             if(err) {
                 return reject(err);
             }
