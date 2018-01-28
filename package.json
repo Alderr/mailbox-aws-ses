@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Alderr/mailbox-aws-ses#readme",
   "dependencies": {
+    "aws-sdk": "^2.188.0",
     "dotenv": "^4.0.0",
     "express": "^4.16.2"
   },

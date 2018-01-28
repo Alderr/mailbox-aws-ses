@@ -7,12 +7,21 @@
 require('dotenv').config();
 
 const express = require('express');
+const aws = require('aws');
 
 
 const app = express();
 
 const PORT = process.env.PORT;
 
+let options = {
+  secretAccessKey: '',
+  accessKeyId: '',
+  
+
+};
+
+const ses = new aws.SES(options);
 app.get('/', (req, res) => {
     res.send('Home');
 });
