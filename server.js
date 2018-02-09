@@ -7,31 +7,23 @@
 require('dotenv').config();
 
 const express = require('express');
-const aws = require('aws-sdk');
 const morgan = require('morgan');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
+const sendRouter = require('./routes/sendRouter');
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(morgan('common'));
+app.use('/api/v1', sendRouter);
 
 const PORT = process.env.PORT;
-const secretAccessKey = process.env.SECRETACCESSKEY;
-const accessKeyId = process.env.ACCESSKEYID;
-const topicARN = process.env.TOPICARN;
 
 const emails = process.env.emails.split(' ');
 const sender = process.env.sender;
-
-const options = {
-    secretAccessKey: secretAccessKey,
-    accessKeyId: accessKeyId,
-    region: 'us-east-1'
-};
-
-const ses = new aws.SES(options);
 
 app.get('/', (req, res) => {
     res.send('Homee');

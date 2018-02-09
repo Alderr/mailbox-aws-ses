@@ -1,10 +1,17 @@
 const express = require('express');
 
-
 const router = express.Router();
 
-router.post('/sendEmail', (req, res) => {
-    console.log('here!');
+const { sendEmail } = require('../controllers/sendController');
+
+router.get('', (req, res) => {
+    res.send('lol');
 });
+
+router.post('/sendEmail', (req, res) => {
+    res.send('Request recieved.');
+    sendEmail(req);
+});
+
 
 module.exports = router;
