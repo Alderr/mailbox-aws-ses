@@ -20,11 +20,12 @@ app.use(morgan('common'));
 const PORT = process.env.PORT;
 const secretAccessKey = process.env.SECRETACCESSKEY;
 const accessKeyId = process.env.ACCESSKEYID;
+const topicARN = process.env.TOPICARN;
 
 const emails = process.env.emails.split(' ');
 const sender = process.env.sender;
 
-let options = {
+const options = {
     secretAccessKey: secretAccessKey,
     accessKeyId: accessKeyId,
     region: 'us-east-1'
@@ -32,10 +33,10 @@ let options = {
 
 const ses = new aws.SES(options);
 
-
 app.get('/', (req, res) => {
     res.send('Homee');
 });
+
 
 app.get('/sendEmail', (req, res) => {
 
@@ -47,19 +48,22 @@ app.get('/sendEmail', (req, res) => {
             Body: {
                 Html: {
                     Charset: 'UTF-8',
-                    Data: 'This message body contains HTML formatting. It can, for example, contain links like this one: <a class="ulink" href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide" target="_blank">Amazon SES Developer Guide</a>.'
-                },
-                Text: {
-                    Charset: 'UTF-8',
-                    Data: 'This is the message body in text format. I rly dont know what this does. Now I do <3'
+                    Data: 'This is important! <a href="https://google.com"> See if it tracks! </a> This message body contains HTML! It can, for example, contain links like this one: <a class="ulink" href="http://docs.aws.amazon.com/ses/latest/DeveloperGuide" target="_blank">Amazon SES Developer Guide</a>.'
                 }
             },
             Subject: {
                 Charset: 'UTF-8',
-                Data: 'AWS-Service-Email'
+                Data: 'Vernon, test this API.'
             }
         },
-        Source: sender
+        Source: sender,
+        ConfigurationSetName: 'mailbox_events',
+        Tags: [
+            {
+                Name: 'user',
+                Value: 'vernonmensah'
+            }
+        ]
     };
 
     ses.sendEmail(emailParams, (err, data) => {
