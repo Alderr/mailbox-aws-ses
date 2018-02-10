@@ -2,7 +2,6 @@ const aws = require('aws-sdk');
 
 const secretAccessKey = process.env.SECRETACCESSKEY;
 const accessKeyId = process.env.ACCESSKEYID;
-const topicARN = process.env.TOPICARN;
 
 const options = {
     secretAccessKey: secretAccessKey,
