@@ -27,7 +27,16 @@ const sendEmail = (req) => {
 
         arrOfPromises.push(create_aws_sendEmail_command(email_content, email_address, user_email_address, campaign_event_data_id ));
     }
-    //call them
+
+    //call them --> (arr.map(promises)...) === ([send_email_command_promise(), send_email_command_promise()])
+    Promise.all(arrOfPromises.map(aFunction => aFunction()))
+        .then(data => {
+            console.log('Successful?');
+            console.log(data);
+        }).catch(err => {
+            console.log('Oh god no. lol.');
+            console.log(err);
+        });
 
     //log output
 };
@@ -62,11 +71,10 @@ function create_aws_sendEmail_command (emailContent, customerEmail, senderEmail,
             }
         ]
     };
-
     //return a function THAT WONT RUN yet. I havent executed it.
     return () => {
-        new Promise((resolve, reject) => {
-            ses.sendEmail(emailParams, (err, data) => {
+        return new Promise((resolve, reject) => {
+            return ses.sendEmail(emailParams, (err, data) => {
                 if(err) {
                     console.log('error!');
                     console.log(err);
