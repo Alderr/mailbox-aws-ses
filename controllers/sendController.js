@@ -15,16 +15,18 @@ const sendEmail = (req) => {
     //check if stuff in body exists
 
     //take it out
-    const { email_content, list_info, user_email_address, campaign_event_data_id } = req.body;
+    const { email_content, contacts, campaign_event_data_id } = req.body;
 
     //create an arr of promises
     const arrOfPromises = [];
 
-    for (let contact in list_info) {
+    for (let contact in contacts) {
 
-        const { email_address } = list_info[contact];
+        console.log('CONTACTS[CONTACT]', JSON.stringify(contacts[contact], null, 2));
 
-        arrOfPromises.push(create_aws_sendEmail_command(email_content, email_address, user_email_address, campaign_event_data_id ));
+        const { email_address } = contacts[contact]['email'];
+
+        arrOfPromises.push(create_aws_sendEmail_command(email_content, email_address, campaign_event_data_id ));
     }
 
     //call them --> (arr.map(promises)...) === ([send_email_command_promise(), send_email_command_promise()])
@@ -41,9 +43,9 @@ const sendEmail = (req) => {
 };
 
 
-function create_aws_sendEmail_command (emailContent, customerEmail, senderEmail, campaignEventDataId) {
+function create_aws_sendEmail_command (emailContent, customerEmail, campaignEventDataId) {
 
-    console.log(customerEmail, senderEmail, campaignEventDataId);
+    console.log(customerEmail, campaignEventDataId);
 
     var emailParams = {
         Destination: {
@@ -61,7 +63,7 @@ function create_aws_sendEmail_command (emailContent, customerEmail, senderEmail,
                 Data: emailContent.subject
             }
         },
-        Source: senderEmail,
+        Source: emailContent.sender,
         ConfigurationSetName: 'mailbox_events',
         Tags: [
             {
