@@ -10,7 +10,8 @@ router.get('', (req, res) => {
 
 router.post('/sendEmail', (req, res) => {
     res.send('Request recieved.');
-    sendEmail(req);
+    console.log(req.body);
+    //sendEmail(req);
 });
 
 
