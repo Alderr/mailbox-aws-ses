@@ -15,7 +15,7 @@ const sendEmail = (req) => {
     //check if stuff in body exists
 
     //take it out
-    const { email_content, contacts, campaignEventDataId } = req.body;
+    const { email_content, contacts, campaign_event_data_id } = req.body;
 
     //create an arr of promises
     const arrOfPromises = [];
@@ -26,18 +26,18 @@ const sendEmail = (req) => {
 
         const email_address = contacts[contact]['email'];
 
-        arrOfPromises.push(create_aws_sendEmail_command(email_content, email_address, campaignEventDataId ));
+        arrOfPromises.push(create_aws_sendEmail_command(email_content, email_address, campaign_event_data_id ));
     }
 
     //call them --> (arr.map(promises)...) === ([send_email_command_promise(), send_email_command_promise()])
-    Promise.all(arrOfPromises.map(aFunction => aFunction()))
-        .then(data => {
-            console.log('Successful?');
-            console.log(data);
-        }).catch(err => {
-            console.log('Oh god no. lol.');
-            console.log(err);
-        });
+    // Promise.all(arrOfPromises.map(aFunction => aFunction()))
+    //     .then(data => {
+    //         console.log('Successful?');
+    //         console.log(data);
+    //     }).catch(err => {
+    //         console.log('Oh god no. lol.');
+    //         console.log(err);
+    //     });
 
     //log output
 };

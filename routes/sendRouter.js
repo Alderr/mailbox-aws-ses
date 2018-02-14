@@ -11,7 +11,7 @@ router.get('', (req, res) => {
 router.post('/sendEmail', (req, res) => {
     res.send('Request recieved.');
     console.log(req.body);
-    //sendEmail(req);
+    sendEmail(req);
 });
 
 
