@@ -30,14 +30,14 @@ const sendEmail = (req) => {
     }
 
     //call them --> (arr.map(promises)...) === ([send_email_command_promise(), send_email_command_promise()])
-    // Promise.all(arrOfPromises.map(aFunction => aFunction()))
-    //     .then(data => {
-    //         console.log('Successful?');
-    //         console.log(data);
-    //     }).catch(err => {
-    //         console.log('Oh god no. lol.');
-    //         console.log(err);
-    //     });
+    Promise.all(arrOfPromises.map(aFunction => aFunction()))
+        .then(data => {
+            console.log('Successful?');
+            console.log(data);
+        }).catch(err => {
+            console.log('Oh god no. lol.');
+            console.log(err);
+        });
 
     //log output
 };
