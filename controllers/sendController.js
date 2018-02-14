@@ -67,7 +67,7 @@ function create_aws_sendEmail_command (emailContent, customerEmail, campaignEven
         ConfigurationSetName: 'mailbox_events',
         Tags: [
             {
-                Name: 'campaign-id',
+                Name: 'campaign-event-data-id',
                 Value: campaignEventDataId
             }
         ]
